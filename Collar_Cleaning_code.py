@@ -2,10 +2,11 @@ import pandas as pd
 
 def clean_labor_data():
     #Read excel file, renames first column to States and take out null rows
+    #Read excel file, renames first column to States and take out null rows
     raw_labor_data = pd.read_excel("Raw_Data/collar_dataset_raw.xlsx", header = 4)
     raw_labor_data.rename(columns={"Unnamed: 0": "State"}, inplace=True)
     raw_labor_data = raw_labor_data.dropna()
-    
+
     #Take out data from 2021 and only keep 2020
     raw_labor_data = raw_labor_data[["State", "Dec.\n2020", "Dec.\n2020.1", "Dec.\n2020.2"]]
 
@@ -30,7 +31,7 @@ def clean_labor_data():
 
     #Block 2 contains Trade, Financial and Professional
     block2 = raw_labor_data[50:100]
-    block2.columns = ["State", "Trade", "Financial", "Prof"]
+    block2.columns = ["State", "Trade", "Financial", "Professional"]
 
     #Block 3 contains Education, Leisure and Government
     block3 = raw_labor_data[100:]
@@ -40,6 +41,12 @@ def clean_labor_data():
     labor_data = block1.merge(block2, on="State")
     labor_data = labor_data.merge(block3, on="State")
 
+    #We only need data on white collar and blue collar, so we can combine each job sector to their respective group.
+    labor_data["White_col"] = labor_data["Constructing"] + labor_data["Mining"] + labor_data["Trade"]
+    labor_data["Blue_col"] = labor_data["Trade"] + labor_data["Financial"] + labor_data["Professional"] + labor_data["Education"] + labor_data["Leisure"] + labor_data["Gov"]
+
+    #Get rid of all other columns except State, White_col, Blue_col and Total
+    labor_data.drop(columns = ["Constructing", "Mining", "Trade", "Financial", "Professional", "Education", "Leisure", "Gov"], inplace=True)
     #export as csv
     labor_data.to_csv('Cleaned Data/state_labor_data.csv')
 
