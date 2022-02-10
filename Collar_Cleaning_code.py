@@ -2,14 +2,13 @@ import pandas as pd
 
 def clean_labor_data():
     #Read excel file, renames first column to States and take out null rows
-    #Read excel file, renames first column to States and take out null rows
-    raw_labor_data = pd.read_excel("Raw_Data/collar_dataset_raw.xlsx", header = 4)
+    raw_labor_data = pd.read_excel("/Raw_Data/collar_dataset_raw.xlsx", header = 4)
     raw_labor_data.rename(columns={"Unnamed: 0": "State"}, inplace=True)
     raw_labor_data = raw_labor_data.dropna()
 
     #Take out data from 2021 and only keep 2020
     raw_labor_data = raw_labor_data[["State", "Dec.\n2020", "Dec.\n2020.1", "Dec.\n2020.2"]]
-
+    
     non_states = ["Virgin Islands", "District of Columbia", "Puerto Rico"]
 
     #Removes all non official states from dataset
@@ -18,6 +17,9 @@ def clean_labor_data():
 
     #Reset index to start at 0
     raw_labor_data = raw_labor_data.reset_index(drop = True)
+
+    #Convert state names into codes (First two letters of each state name)
+    raw_labor_data["State"] = raw_labor_data["State"].apply(lambda state_name: state_name[:2].upper())
 
     #eliminated extra characters in state names
     raw_labor_data["State"] = raw_labor_data["State"].str.replace('\d+', '')
@@ -48,6 +50,6 @@ def clean_labor_data():
     #Get rid of all other columns except State, White_col, Blue_col and Total
     labor_data.drop(columns = ["Constructing", "Mining", "Trade", "Financial", "Professional", "Education", "Leisure", "Gov"], inplace=True)
     #export as csv
-    labor_data.to_csv('Cleaned Data/state_labor_data.csv')
+    labor_data.to_csv('/Cleaned Data/state_labor_data.csv')
 
 clean_labor_data()
