@@ -63,7 +63,7 @@ us_state_to_abbrev = {
 
 def clean_labor_data():
     #Read excel file, renames first column to States and take out null rows
-    raw_labor_data = pd.read_excel("./Raw_Data/collar_dataset_raw.xlsx", header = 4)
+    raw_labor_data = pd.read_excel("/Raw Data/collar_dataset_raw.xlsx", header = 4)
     raw_labor_data.rename(columns={"Unnamed: 0": "State"}, inplace=True)
     raw_labor_data = raw_labor_data.dropna()
 
