@@ -5,6 +5,6 @@ A quantitative analysis using real-world data to determine if the macroscopic so
 
 ### Full report can be read in index.ipynb. Raw data, cleaned data, all python code used, and previous notebooks used in the project are all accessible in this repository.
 
-Created by Stephen Kim, Ethan Lee, Ernest Lin, Wesley Nguyen, and Clara Yi (all of the University of California, San Diego)
+Created by Stephen Kim, Ethan Lee, Ernest Lin, Wesley Nguyen, and Clara Yi (all of the University of California, San Diego) for COGS 108 Winter 2022. Completed March 2022.
 
 Questions about this repository can be directed to ethanlee2337@gmail.com
